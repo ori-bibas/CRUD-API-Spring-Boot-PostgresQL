@@ -24,12 +24,12 @@ public class CustomerController {
         return repository.findById(id);
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public Mono<Customer> createCustomer(@RequestBody Customer customer) {
         return repository.save(customer);
     }
 
-    @PutMapping
+    @PutMapping("/update/{id}")
     public Mono<Customer> updateCustomer(@RequestBody Customer customer, @PathVariable Integer id) {
         return repository.findById(id).map((c) -> {
             c.setName(customer.getName());
@@ -37,7 +37,7 @@ public class CustomerController {
         }).flatMap( c -> repository.save(c));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public Mono<Void> deleteCustomer(@PathVariable Integer id) {
         return repository.deleteById(id);
     }
